@@ -15,14 +15,24 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('size')->nullable();
-            $table->string('ref')->unique();
-            $table->decimal('price',10,2)->nullable();
-            $table->boolean('is_bought')->default(false);
-            $table->tinyInteger('status_id')->constrained('figure_statuses');
-            $table->uuid('website_id')->constrained('websites');
+
             $table->uuid('editor_id')->constrained('editors');
-            $table->uuid('collection_id')->constrained('collections');
-            $table->uuid('license_id')->constrained('licenses');
+            $table->uuid('series_id')->constrained('series');
+
+            // > figure_resseler
+            // > figure_character
+            // > figure_user (collection)
+
+            /*
+
+            $table->decimal('price',10,2)->nullable(); LIKED TO FIGURE_RESSELLER
+            $table->boolean('is_bought')->default(false); LIKED TO FIGURE_USER
+            $table->tinyInteger('status_id')->constrained('figure_statuses'); LIKED TO FIGURE_RESSELLER
+            $table->uuid('reseller_id')->constrained('resellers'); LIKED TO FIGURE_RESSELLER
+            $table->uuid('license_id')->constrained('licenses'); LIKED TO CHARACTER
+
+            */
+
             $table->timestamps();
         });
     }

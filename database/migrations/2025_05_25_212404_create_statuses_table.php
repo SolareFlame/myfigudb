@@ -11,9 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tags', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+        Schema::create('statuses', function (Blueprint $table) {
+            $table->id();
             $table->string('name', 50)->unique();
+
+            /*
+            ex:
+            PRECO (SANS VISUEL)
+            PRECO
+            EN STOCK
+            RUPTURE
+             */
         });
     }
 
@@ -22,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('statuses');
     }
 };

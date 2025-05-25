@@ -11,14 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('figure_statuses', function (Blueprint $table) {
-            $table->tinyIncrements('id');
-            $table->string('label', 50)->unique();
+        Schema::create('resellers', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('name', 100);
+            $table->string('url', 255);
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('figure_statuses');
+        Schema::dropIfExists('resellers');
     }
 };

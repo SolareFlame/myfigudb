@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('figure_characters', function (Blueprint $table) {
             $table->uuid('figure_id');
             $table->uuid('character_id');
+
             $table->primary(['figure_id', 'character_id']);
 
             $table->foreign('figure_id')->references('id')->on('figures')->onDelete('cascade');
