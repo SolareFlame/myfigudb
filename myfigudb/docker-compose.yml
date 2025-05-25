@@ -1,0 +1,66 @@
+services:
+    app:
+        image: serversideup/php:8.2-fpm
+        container_name: laravel_app
+        restart: unless-stopped
+        working_dir: /var/www/html
+        env_file:
+            - ./.env
+        volumes:
+            - ./:/var/www/html
+        networks:
+            - laravel_network
+        depends_on:
+            - db
+
+    webserver:
+        image: nginx:alpine
+        container_name: nginx_webserver
+        restart: unless-stopped
+        ports:
+            - "8000:80"
+        volumes:
+            - ./:/var/www/html
+            - ./docker/nginx/conf.d:/etc/nginx/conf.d
+        networks:
+            - laravel_network
+        depends_on:
+            - app
+
+    db:
+        image: mariadb:10.6
+        container_name: mariadb_db
+        restart: unless-stopped
+        env_file:
+            - ./.env
+        volumes:
+            - db_data:/var/lib/mysql
+        ports:
+            - "3306:3306"
+        networks:
+            - laravel_network
+
+
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:latest
+        container_name: phpmyadmin
+        restart: unless-stopped
+        environment:
+            PMA_HOST: db
+            PMA_USER: ${MYSQL_USER}
+            PMA_PASSWORD: ${MYSQL_PASSWORD}
+            PMA_PORT: 3306
+        ports:
+            - "8080:80"
+        networks:
+            - laravel_network
+        depends_on:
+            - db
+
+volumes:
+    db_data:
+
+networks:
+    laravel_network:
+        driver: bridge
