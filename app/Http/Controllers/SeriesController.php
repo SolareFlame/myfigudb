@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tag;
+use App\Models\Series;
 use Illuminate\Http\Request;
 
-class TagController extends Controller
+class SeriesController
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class TagController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Tag $tag)
+    public function show(Series $series)
     {
         //
     }
@@ -42,7 +42,7 @@ class TagController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tag $tag)
+    public function edit(Series $series)
     {
         //
     }
@@ -50,7 +50,7 @@ class TagController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tag $tag)
+    public function update(Request $request, Series $series)
     {
         //
     }
@@ -58,7 +58,7 @@ class TagController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tag $tag)
+    public function destroy(Series $series)
     {
         //
     }
