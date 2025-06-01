@@ -17,8 +17,8 @@ return new class extends Migration
 
             $table->primary(['figure_id', 'character_id']);
 
-            $table->foreign('figure_id')->references('id')->on('figures')->onDelete('cascade');
-            $table->foreign('character_id')->references('id')->on('characters')->onDelete('cascade');
+            $table->foreign('figure_id')->references('id')->on('figures');
+            $table->foreign('character_id')->references('id')->on('characters');
         });
     }
 

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('size')->nullable();
+            $table->text('description')->nullable();
 
             $table->uuid('editor_id')->constrained('editors');
             $table->uuid('series_id')->constrained('series');

@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('statuses', function (Blueprint $table) {
+        Schema::create('figure_images', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 50)->unique();
+
+            $table->uuid('figure_id')->constrained('figures');
+            $table->string('image_path', 255); // hash.ext
+
+            $table->timestamps();
         });
     }
 
@@ -22,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('statuses');
+        Schema::dropIfExists('figure_images');
     }
 };
