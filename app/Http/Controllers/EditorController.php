@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Editor;
 use Illuminate\Http\Request;
 
-class EditorController extends Controller
+class EditorController
 {
     /**
      * Display a listing of the resource.
