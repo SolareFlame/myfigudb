@@ -8,6 +8,10 @@ services:
             - ./.env
         volumes:
             - ./:/var/www/html
+
+        # Mounting this to store permissions on files, can be a Dockerfile with chmod, somehow we need to set permissions on this (laravel can't write natively)
+            - ./storage:/var/www/html/storage
+            - ./bootstrap/cache:/var/www/html/bootstrap/cache
         networks:
             - laravel_network
         depends_on:
@@ -60,6 +64,8 @@ services:
 
 volumes:
     db_data:
+    storage_data:
+    cache_data:
 
 networks:
     laravel_network:
