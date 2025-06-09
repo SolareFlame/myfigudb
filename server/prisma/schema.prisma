@@ -1,0 +1,130 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(uuid())
+  name     String @unique
+  email    String @unique //ex: @solare
+  password String
+
+  username String  //ex: Solare
+
+  figures FigureUser[]
+
+  @@map("user")
+}
+
+model FigureUser {
+  user_id    String
+  figure_id  String
+  comment    String?
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  buy_at     DateTime?
+
+  user   User   @relation(fields: [user_id], references: [id])
+  figure Figure @relation(fields: [figure_id], references: [id])
+
+  @@id([user_id, figure_id])
+  @@map("figure_user")
+}
+
+model Figure {
+  id           String    @id @default(uuid())
+  name         String
+  size         String?
+  release_date DateTime?
+  color        String?
+
+  series_id String?
+  editor_id String?
+
+  series Series? @relation(fields: [series_id], references: [id])
+  editor Editor? @relation(fields: [editor_id], references: [id])
+
+  figureUsers     FigureUser[]
+  figureResellers FigureReseller[]
+  characters      FigureCharacter[]
+
+  @@map("figure")
+}
+
+model FigureReseller {
+  figure_id   String
+  reseller_id String
+  price       Float
+  ref         String?
+  href        String?
+  status      String
+
+  figure   Figure   @relation(fields: [figure_id], references: [id])
+  reseller Reseller @relation(fields: [reseller_id], references: [id])
+
+  @@id([figure_id, reseller_id])
+  @@map("figure_reseller")
+}
+
+model Reseller {
+  id   String  @id @default(uuid())
+  name String
+  href String?
+
+  figures FigureReseller[]
+
+  @@map("reseller")
+}
+
+model Series {
+  id   String @id @default(uuid())
+  name String
+
+  figures Figure[]
+
+  @@map("series")
+}
+
+model Editor {
+  id   String @id @default(uuid())
+  name String
+
+  figures Figure[]
+
+  @@map("editor")
+}
+
+model FigureCharacter {
+  figure_id    String
+  character_id String
+
+  figure    Figure    @relation(fields: [figure_id], references: [id])
+  character Character @relation(fields: [character_id], references: [id])
+
+  @@id([figure_id, character_id])
+  @@map("figure_character")
+}
+
+model Character {
+  id         String  @id @default(uuid())
+  name       String
+  licence_id String?
+
+  licence License?          @relation(fields: [licence_id], references: [id])
+  figures FigureCharacter[]
+
+  @@map("character")
+}
+
+model License {
+  id   String @id @default(uuid())
+  name String
+
+  characters Character[]
+
+  @@map("license")
+}
