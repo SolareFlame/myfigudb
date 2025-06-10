@@ -9,11 +9,13 @@ datasource db {
 
 model User {
   id       String @id @default(uuid())
-  name     String @unique
+  handle   String @unique
   email    String @unique //ex: @solare
   password String
 
-  username String  //ex: Solare
+  role String @default("user")
+
+  display_name String? //ex: Solare
 
   figures FigureUser[]
 
@@ -51,8 +53,23 @@ model Figure {
   figureUsers     FigureUser[]
   figureResellers FigureReseller[]
   characters      FigureCharacter[]
+  FigureImage     FigureImage[]
 
   @@map("figure")
+}
+
+model FigureImage {
+  figure_id  String
+  image_path String
+  priority   Int?   @default(0)
+
+  size   String?
+  height Int? // Kilobytes
+
+  figure Figure @relation(fields: [figure_id], references: [id])
+
+  @@id([figure_id, image_path])
+  @@map("figure_image")
 }
 
 model FigureReseller {
