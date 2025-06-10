@@ -16,26 +16,25 @@ declare module 'express-serve-static-core' {
 }
 
 export const authMiddleware = (allowed: string[]): RequestHandler => {
-    return (req: Request, res: Response, next: NextFunction) => {
-        const authHeader = req.headers.authorization;
-        if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            res.status(401).json({ message: 'Authorization token missing or malformed' });
+    return (req: Request, res: Response, next: NextFunction): void => {
+        const token = req.cookies.token;
+        if (!token) {
+            res.status(401).json({ message: 'Token missing' });
             return;
         }
 
-        const token = authHeader.split(' ')[1];
         try {
             req.user = jwt.verify(token, SECRET) as JwtPayload;
 
             if (!allowed.includes(req.user.role)) {
-                res.status(403).json({ message: 'Access denied: insufficient permissions' });
+                res.status(403).json({ message: 'Access denied' });
                 return;
             }
 
             next();
         } catch (err) {
             res.status(401).json({ message: 'Invalid or expired token' });
-            return;
         }
     };
 };
+

@@ -6,19 +6,32 @@ import {Request, Response} from "express";
 const SECRET = process.env.JWT_SECRET!
 
 export const loginUser =  async (req: Request, res: Response) => {
-    const { handle, password } = req.body;
+    try {
+        const {handle, password} = req.body;
 
-    const user = await getUserByHandle(handle);
-    if (!user) throw new Error('Invalid credentials');
+        const user = await getUserByHandle(handle);
+        if (!user) throw new Error('Invalid credentials');
 
-    const valid = await bcrypt.compare(password, user.password);
-    if (!valid) throw new Error('Invalid credentials');
+        const valid = await bcrypt.compare(password, user.password);
+        if (!valid) throw new Error('Invalid credentials');
 
-    const token = jwt.sign({ id: user.id, handle: user.handle }, SECRET, {
-        expiresIn: '1h'
-    });
+        const token = jwt.sign(
+            {id: user.id, handle: user.handle, role: user.role},
+            SECRET,
+            {expiresIn: '1h'}
+        );
 
-    res.json({ token, user: { id: user.id, handle: user.handle, email: user.email } });
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: false, // Set to true in production with HTTPSs
+            sameSite: 'strict',
+            maxAge: 1000 * 60 * 60,
+        });
+
+        res.json({token, user: {id: user.id, handle: user.handle, email: user.email}});
+    } catch (err) {
+        res.status(500).json({ message: 'Internal server error' });
+    }
 };
 
 
