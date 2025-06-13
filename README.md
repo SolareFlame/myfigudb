@@ -7,6 +7,8 @@
   <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black" alt="React"></a>
   <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/Node.js-43853D?logo=node.js&logoColor=white" alt="Node.js"></a>
   <a href="https://nodemon.io/"><img src="https://img.shields.io/badge/Nodemon-76D04B?logo=nodemon&logoColor=white" alt="Nodemon"></a>
+  <a href="https://min.io/"><img src="https://img.shields.io/badge/MinIO-0072C6?logo=minio&logoColor=white" alt="MinIO"></a>
+  <a href="https://www.nginx.com/"><img src="https://img.shields.io/badge/Nginx-009639?logo=nginx&logoColor=white" alt="Nginx"></a>
 </p>
 
 
@@ -55,11 +57,84 @@ It allows users to **search**, **track**, and **organize** their figure collecti
 
 ## Tech Stack
 
-| Layer       | Tech                            |
-|-------------|---------------------------------|
-| Frontend    | React                           |
-| Backend     | Node.js (and Nodemon) + Express |
-| Database    | PostgreSQL + Prisma (ORM)       |
+| Layer    | Tech                            |
+|----------|---------------------------------|
+| Frontend | React                           |
+| Backend  | Node.js (and Nodemon) + Express |
+| Database | PostgreSQL + Prisma (ORM)       |
+| Images   | Minio + Ngnix                   |
+
+---
+
+## 📄 API
+
+### Figures
+> - GET /api/figures
+> - GET /api/figures/:id
+> - POST /api/figures
+> - PATCH /api/figures/:id
+> - DELETE /api/figures/:id
+
+> - GET /api/figures/:id/images
+> - POST /api/figures/:id/images
+
+### Series
+> - GET /api/series
+> - GET /api/series/:id
+> - POST /api/series
+> - PATCH /api/series/:id
+> - DELETE /api/series/:id
+
+> - GET /api/series/:id/figures
+> - POST /api/series/:id/figures
+
+### Editors
+> - GET /api/editors
+> - GET /api/editors/:id
+> - POST /api/editors
+> - PATCH /api/editors/:id
+> - DELETE /api/editors/:id
+
+> - GET /api/editors/:id/figures
+> - POST /api/editors/:id/figures
+
+### Users
+> - GET /api/users
+> - GET /api/users/:id
+
+### Authentication
+> - POST /api/auth/login
+> - POST /api/auth/register
+
+### Resellers
+> - GET /api/resellers
+> - GET /api/resellers/:id
+> - POST /api/resellers
+> - PATCH /api/resellers/:id
+> - DELETE /api/resellers/:id
+
+> - GET /api/resellers/:id/figures
+> - POST /api/resellers/:id/figures
+
+### Characters
+> - GET /api/characters
+> - GET /api/characters/:id
+> - POST /api/characters
+> - PATCH /api/characters/:id
+> - DELETE /api/characters/:id
+
+> - GET /api/characters/:id/figures
+> - POST /api/characters/:id/figures
+
+### Licenses
+> - GET /api/licenses
+> - GET /api/licenses/:id
+> - POST /api/licenses
+> - PATCH /api/licenses/:id
+> - DELETE /api/licenses/:id
+
+> - GET /api/licenses/:id/characters
+> - POST /api/licenses/:id/characters
 
 ---
 
