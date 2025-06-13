@@ -60,7 +60,7 @@ model Figure {
 
 model FigureImage {
   figure_id  String
-  image_path String
+  key String
   priority   Int?   @default(0)
 
   size   String?
@@ -68,7 +68,7 @@ model FigureImage {
 
   figure Figure @relation(fields: [figure_id], references: [id])
 
-  @@id([figure_id, image_path])
+  @@id([figure_id, key])
   @@map("figure_image")
 }
 
