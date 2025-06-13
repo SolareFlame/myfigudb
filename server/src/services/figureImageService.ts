@@ -5,31 +5,31 @@ export const getFigureImages = (figure_id: string) => {
         where: { figure_id: figure_id },
     })
 }
-export const getFigureImage = (figure_id: string, image_path: string) => {
+export const getFigureImage = (figure_id: string, key: string) => {
     return prisma.figureImage.findFirst({
         where: {
             figure_id: figure_id,
-            image_path: image_path,
+            key: key,
         },
     })
 }
 
-export const addFigureImage = (figure_id: string, image_path: string, size?: string, height?: number) => {
+export const addFigureImage = (figure_id: string, key: string, size?: string, height?: number) => {
     return prisma.figureImage.create({
         data: {
             figure_id: figure_id,
-            image_path: image_path,
+            key: key,
             size: size,
             height: height,
         },
     })
 }
 
-export const deleteFigureImage = (figure_id: string, image_path: string) => {
+export const deleteFigureImage = (figure_id: string, key: string) => {
     return prisma.figureImage.deleteMany({
         where: {
             figure_id: figure_id,
-            image_path: image_path,
+            key: key,
         },
     })
 }
@@ -42,12 +42,12 @@ export const deleteFigureImages = (figure_id: string) => {
     })
 }
 
-export const updateFigureImage = (figure_id: string, image_path: string, size?: string, height?: number) => {
+export const updateFigureImage = (figure_id: string, key: string, size?: string, height?: number) => {
     return prisma.figureImage.update({
         where: {
-            figure_id_image_path: {
+            figure_id_key: {
                 figure_id: figure_id,
-                image_path: image_path,
+                key: key,
             },
         },
         data: {

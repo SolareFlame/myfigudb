@@ -1,5 +1,6 @@
 import * as figureService from '../services/figureService'
 import { Request, Response } from 'express'
+import {toFigureDTO} from "../dto/figure.dto";
 
 /**
  * Get all figures from the database.
@@ -12,7 +13,7 @@ export const getFigures = async (req: Request, res: Response) => {
 
 
 /**
- * Get a figure by its ID.
+ * Get all figure data by its ID.
  */
 export const getFigureById = async (req: Request, res: Response) => {
     const { id } = req.params
@@ -20,7 +21,7 @@ export const getFigureById = async (req: Request, res: Response) => {
     if (!figure) {
         return res.status(404).json({ message: 'Figure not found' })
     }
-    res.json(figure)
+    res.json(toFigureDTO(figure))
 }
 
 /**

@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import figureRoutes from "./routes/figureRoutes";
 import userRoutes from "./routes/userRoutes";
 import authRoutes from "./routes/authRoutes";
+import {createBucket, setBucketPublicRead} from "./s3client";
 
 dotenv.config();
 
@@ -14,6 +15,9 @@ const PORT = process.env.PORT || 5000;
 if (!process.env.JWT_SECRET) {
     throw new Error('JWT_SECRET is not set in environment variables');
 }
+
+createBucket(process.env.S3_BUCKET!).catch(console.error);
+setBucketPublicRead(process.env.S3_BUCKET!).catch(console.error);
 
 
 app.use(cors());

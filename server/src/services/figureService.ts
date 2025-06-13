@@ -1,4 +1,4 @@
-import { prisma } from '../prisma'
+import {prisma} from '../prisma'
 
 export const getAllFigures = () => {
     return prisma.figure.findMany()
@@ -6,11 +6,31 @@ export const getAllFigures = () => {
 
 export const getFigureById = (id: string) => {
     return prisma.figure.findUnique({
-        where: { id: id },
+        where: {id},
+        include: {
+            FigureImage: true,
+            characters: {
+                include: {
+                    character: {
+                        include: {
+                            licence: true,
+                        },
+                    },
+                },
+            },
+            figureResellers: {
+                include: {
+                    reseller: true,
+                },
+            },
+            series: true,
+            editor: true,
+        },
     })
 }
 
-export const addFigure = (data: {name: string, size?: string, color?: string, release_date?: Date}) => {
+
+export const addFigure = (data: { name: string, size?: string, color?: string, release_date?: Date }) => {
     return prisma.figure.create({
         data: {
             name: data.name,
@@ -21,9 +41,9 @@ export const addFigure = (data: {name: string, size?: string, color?: string, re
     })
 }
 
-export const editFigure = (id: string, data: {name?: string, size?: string, color?: string, release_date?: Date}) => {
+export const editFigure = (id: string, data: { name?: string, size?: string, color?: string, release_date?: Date }) => {
     return prisma.figure.update({
-        where: { id: id },
+        where: {id: id},
         data: {
             name: data.name,
             size: data.size,
@@ -35,11 +55,11 @@ export const editFigure = (id: string, data: {name?: string, size?: string, colo
 
 export const deleteFigure = (id: string) => {
     return prisma.figure.delete({
-        where: { id: id },
+        where: {id: id},
     })
 }
 
-export const searchFigures = (parameter : string, query: string) => {
+export const searchFigures = (parameter: string, query: string) => {
     return prisma.figure.findMany({
         where: {
             [parameter]: {
